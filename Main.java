@@ -5,22 +5,31 @@ public class Main {
 	//accepts 2 space-separated arguments of integers, eg: java Main 3 5
     public static void main(String[] args) {
         int steps;
+        int firstVolume = 3;
+        int secondVolume = 5;
         MeasureWater measure = new MeasureWater();
 
-    	String regex = "[1-9]"; //default, use the other regex for numbers 1-100
-    	//String regex = "[1-9][0-9]?|100";
-    	if (!args[0].matches(regex) || !args[1].matches(regex)) {
-    		System.out.println("Incorrect input: Acceptable input would be " +
-    			"two space separated integers with a value between 1 and 9.");
-    		return;
-    	}
-    	if (args.length > 2) {
-    		System.out.println("Ignoring any argument after the first two.");
-    		System.out.println();
-    	}
+        if (args.length >= 2) {
+        	String regex = "[1-9]"; //default, use the other regex for numbers 1-100
+        	//String regex = "[1-9][0-9]?|100";
+        	if (!args[0].matches(regex) || !args[1].matches(regex)) {
+        		System.out.println("Incorrect input: Acceptable input would be " +
+        			"\ntwo space separated integers with a value between 1 and 9." + 
+                    "\nUsing default values of 3 and 5.");
+        	} else {
+                firstVolume = Integer.parseInt(args[0]);
+                secondVolume = Integer.parseInt(args[1]);
+            }
 
-    	int firstVolume = Integer.parseInt(args[0]);
-    	int secondVolume = Integer.parseInt(args[1]);
+            if (args.length > 2) {
+                System.out.println("Ignoring any argument after the first two.");
+                System.out.println();
+            }
+        } else {
+            System.out.println("Input did not contain two integers." + 
+                "\nUsing default values of 3 and 5.");
+        }
+
         int smallBottle = Math.min(firstVolume, secondVolume); //volume of small bottle
         int bigBottle = Math.max(firstVolume, secondVolume); //volume of big bottle
         int[] range = IntStream.rangeClosed(1, (bigBottle+smallBottle)).toArray(); //requires java8
